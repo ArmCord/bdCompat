@@ -1,7 +1,7 @@
-const fs =  require("fs");
-const path =  require("path");
-const electron =  require("electron");
-const IPCEvents =  require("./ipcCommon");
+const fs = require("fs");
+const path = require("path");
+const electron = require("electron");
+const IPCEvents = require("./ipcCommon");
 
 // Build info file only exists for non-linux (for current injection)
 const appPath = electron.app.getAppPath();
@@ -65,7 +65,6 @@ module.exports = class BetterDiscord {
     // }
 
     static setup(browserWindow) {
-
         // Setup some useful vars to avoid blocking IPC calls
         try {
             process.env.DISCORD_RELEASE_CHANNEL = require(buildInfoFile).releaseChannel;
@@ -83,22 +82,24 @@ module.exports = class BetterDiscord {
             //if (!hasCrashed) return this.injectRenderer(browserWindow);
 
             // If a previous crash was detected, show a message explaining why BD isn't there
-            electron.dialog.showMessageBox({
-                title: "Discord Crashed",
-                type: "warning",
-                message: "Something crashed your Discord Client",
-                detail: "BetterDiscord has automatically disabled itself just in case. To enable it again, restart Discord or click the button below.\n\nThis may have been caused by a plugin. Try moving all of your plugins outside the plugin folder and see if Discord still crashed.",
-                buttons: ["Try Again", "Open Plugins Folder", "Cancel"],
-            }).then((result)=>{
-                if (result.response === 0) {
-                    electron.app.relaunch();
-                    electron.app.exit();
-                }
-                if (result.response === 1) {
-                    electron.shell.openPath(path.join(dataPath, "plugins"));
-                }
-            });
-            hasCrashed = false;
+            if (browserWindow.webContents.getURL().includes("discord.com")) {
+                electron.dialog.showMessageBox({
+                    title: "Discord Crashed",
+                    type: "warning",
+                    message: "Something crashed your Discord Client",
+                    detail: "BetterDiscord has automatically disabled itself just in case. To enable it again, restart Discord or click the button below.\n\nThis may have been caused by a plugin. Try moving all of your plugins outside the plugin folder and see if Discord still crashed.",
+                    buttons: ["Try Again", "Open Plugins Folder", "Cancel"],
+                }).then((result) => {
+                    if (result.response === 0) {
+                        electron.app.relaunch();
+                        electron.app.exit();
+                    }
+                    if (result.response === 1) {
+                        electron.shell.openPath(path.join(dataPath, "plugins"));
+                    }
+                });
+                hasCrashed = false;
+            }
         });
 
         // This is used to alert renderer code to onSwitch events

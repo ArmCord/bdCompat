@@ -1,5 +1,5 @@
-const electron =  require("electron");
-const BetterDiscord =  require("./bdMain");
+const electron = require("electron");
+const BetterDiscord = require("./bdMain");
 
 class BrowserWindow extends electron.BrowserWindow {
     constructor(options) {
@@ -9,7 +9,7 @@ class BrowserWindow extends electron.BrowserWindow {
 
         // Don't allow just "truthy" values
         const shouldBeTransparent = BetterDiscord.getSetting("window", "transparency");
-        if (typeof(shouldBeTransparent) === "boolean" && shouldBeTransparent) {
+        if (typeof (shouldBeTransparent) === "boolean" && shouldBeTransparent) {
             options.transparent = true;
             options.backgroundColor = "#00000000";
         }
@@ -29,6 +29,6 @@ Object.assign(BrowserWindow, electron.BrowserWindow);
 function patchBrowserWindow() {
     const electronPath = require.resolve("electron");
     delete require.cache[electronPath].exports; // If it didn't work, try to delete existing
-    require.cache[electronPath].exports = {...electron, BrowserWindow}; // Try to assign again after deleting
+    require.cache[electronPath].exports = { ...electron, BrowserWindow }; // Try to assign again after deleting
 }
-module.exports = {patchBrowserWindow};
+module.exports = { patchBrowserWindow };
