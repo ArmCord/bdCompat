@@ -82,7 +82,7 @@ module.exports = class BetterDiscord {
             //if (!hasCrashed) return this.injectRenderer(browserWindow);
 
             // If a previous crash was detected, show a message explaining why BD isn't there
-            if (browserWindow.webContents.getURL().includes("discord.com")) {
+            if (browserWindow.webContents.getURL().includes("discord.com") && !browserWindow.webContents.isLoading()) {
                 electron.dialog.showMessageBox({
                     title: "Discord Crashed",
                     type: "warning",
@@ -98,8 +98,8 @@ module.exports = class BetterDiscord {
                         electron.shell.openPath(path.join(dataPath, "plugins"));
                     }
                 });
-                hasCrashed = false;
             }
+            hasCrashed = false;
         });
 
         // This is used to alert renderer code to onSwitch events
