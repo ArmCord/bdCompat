@@ -1,0 +1,17 @@
+const MINIMIZE = "bd-window-minimize";
+const MAXIMIZE = "bd-window-maximize";
+const RELAUNCH = "bd-relaunch-app";
+const GET_PATH = "bd-get-path";
+const RUN_SCRIPT = "bd-run-script";
+const NAVIGATE = "bd-did-navigate-in-page";
+const OPEN_DEVTOOLS = "bd-open-devtools";
+const CLOSE_DEVTOOLS = "bd-close-devtools";
+const TOGGLE_DEVTOOLS = "bd-toggle-devtools";
+const OPEN_WINDOW = "bd-open-window";
+const INSPECT_ELEMENT = "bd-inspect-element";
+const MINIMUM_SIZE = "bd-minimum-size";
+const WINDOW_SIZE = "bd-window-size";
+const DEVTOOLS_WARNING = "bd-remove-devtools-message";
+const OPEN_DIALOG = "bd-open-dialog";
+const REGISTER_PRELOAD = "bd-register-preload";
+module.exports = {MINIMIZE, MAXIMIZE, RELAUNCH, GET_PATH, RUN_SCRIPT, NAVIGATE, OPEN_DEVTOOLS, CLOSE_DEVTOOLS, TOGGLE_DEVTOOLS, OPEN_WINDOW, INSPECT_ELEMENT, MINIMUM_SIZE, WINDOW_SIZE, DEVTOOLS_WARNING, OPEN_DIALOG, REGISTER_PRELOAD};
