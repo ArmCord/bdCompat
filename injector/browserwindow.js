@@ -13,7 +13,7 @@ class BrowserWindow extends electron.BrowserWindow {
             options.transparent = true;
             options.backgroundColor = "#00000000";
         }
-
+        options.webPreferences.devTools = true; // Enable devtools by default
         // Only affect frame if it is *explicitly* set
         // const shouldHaveFrame = BetterDiscord.getSetting("window", "frame");
         // if (typeof(shouldHaveFrame) === "boolean") options.frame = shouldHaveFrame;

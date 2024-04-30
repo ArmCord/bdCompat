@@ -1,7 +1,5 @@
-const {ipcMain, BrowserWindow, app, dialog} =  require("electron");
+const {ipcMain, BrowserWindow, app, dialog, systemPreferences} =  require("electron");
 const IPCEvents =  require("./ipcCommon");
-
-app.commandLine.appendSwitch('remote-debugging-port', '8315');
 
 const getPath = (event, pathReq) => {
     let returnPath;
@@ -85,6 +83,11 @@ const setWindowSize = (event, width, height) => {
     window.setSize(width, height);
 };
 
+const getAccentColor = () => {
+    // intentionally left blank so that fallback colors will be used
+    return systemPreferences.getAccentColor() || "";
+};
+
 const stopDevtoolsWarning = event => event.sender.removeAllListeners("devtools-opened");
 
 const openDialog = (event, options = {}) => {
@@ -145,6 +148,7 @@ module.exports = class IPCMain {
             ipcMain.on(IPCEvents.WINDOW_SIZE, setWindowSize);
             ipcMain.on(IPCEvents.DEVTOOLS_WARNING, stopDevtoolsWarning);
             ipcMain.on(IPCEvents.REGISTER_PRELOAD, registerPreload);
+            ipcMain.handle(IPCEvents.GET_ACCENT_COLOR, getAccentColor);
             ipcMain.handle(IPCEvents.RUN_SCRIPT, runScript);
             ipcMain.handle(IPCEvents.OPEN_DIALOG, openDialog);
             ipcMain.handle(IPCEvents.OPEN_WINDOW, createBrowserWindow);
